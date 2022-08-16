@@ -1,0 +1,14 @@
+:root {
+  --picked-color: initial;
+}
+
+A:visited,
+A:visited * {
+  color: var(--picked-color) !important;
+}
+
+/* .overlayCard {
+  width: 400px;
+  height: 500px;
+  background-color: aqua;
+} */
