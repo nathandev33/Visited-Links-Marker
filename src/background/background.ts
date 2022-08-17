@@ -1,18 +1,22 @@
 // TODO: background script
+import { setStoredOptions } from '../utils/storage'
 chrome.runtime.onInstalled.addListener(() => {
-  chrome.storage.sync.set({
-    where_options: 'all',
-    link_color: 'rgba(193,22,22,0.5)',
+  setStoredOptions({
+    where_options: 'except',
+    link_color: 'rgba(255,179,0,1)',
     link_background: 'revert',
-    except_sites: ['except', 'sites', 'test'],
-    only_sites: [['only', 'sites', 'test']],
+    except_sites: [
+      'https://stackoverflow.com',
+      'https://natanael-adamec.cz/',
+      'https://www.neelnanda.io',
+    ],
+    only_sites: ['only', 'sites', 'test'],
   })
 })
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   // console.log(message)
   // console.log(sender)
-
   // console.log(sendResponse)
   sendResponse('response z background')
 })

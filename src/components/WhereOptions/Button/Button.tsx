@@ -3,6 +3,7 @@ import ButtonUnstyled, { buttonUnstyledClasses } from '@mui/base/ButtonUnstyled'
 import { styled } from '@mui/system'
 import Stack from '@mui/material/Stack'
 import TextArea from '../TextArea'
+import { setStoredOptions } from '../../../utils/storage'
 
 const blue = {
   500: '#007FFF',
@@ -42,20 +43,22 @@ const CustomButton = styled(ButtonUnstyled)`
   }
 `
 interface AppProps {
-  textAreaContent: string
+  onClickEvent: any
+  ref: any
 }
 
-const App: React.FC<AppProps> = ({ textAreaContent }) => {
-  const savePreferences = () => {
-    const arr = textAreaContent.split('\n')
-    chrome.storage.sync.set({ excludedWebsites: arr })
-  }
+const Button: React.FC<AppProps> = ({ onClickEvent }) => {
+  // const savePreferences = () => {
+  //   const arr = textAreaContent.split('\n')
+  //   setStoredOptions({ except_sites: arr })
+  // }
   return (
     <Stack spacing={2} direction="row">
       <CustomButton
-        onClick={() => {
-          savePreferences
-        }}
+        // onClick={() => {
+        //   savePreferences
+        // }}
+        onClick={() => onClickEvent}
       >
         Save
       </CustomButton>
@@ -64,4 +67,4 @@ const App: React.FC<AppProps> = ({ textAreaContent }) => {
   )
 }
 
-export default App
+export default Button

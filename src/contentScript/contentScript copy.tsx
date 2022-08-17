@@ -2,17 +2,39 @@ import React, { useEffect, useState } from 'react'
 import ReactDOM from 'react-dom'
 
 import './contentScript.css'
+import { setStoredOptions, getStoredOptions } from '../utils/storage'
+
 // import getLinks from './getLinks'
 
 const App: React.FC<{}> = () => {
+  getStoredOptions().then((data) => {
+    if (data.where_options === 'except') {
+    }
+  })
+
   const excludedWebsites: Array<string> = [
     'https://www.neelnanda.io/blog/49-mentoring',
-    'https://www.google.com/',
-    'https://natanael-adamec.cz/',
+    'https://www.neelnanda.io',
+    // 'https://www.google.com',
+    'https://natanael-adamec.cz',
   ]
+
+  const URL = document.URL
+  excludedWebsites.forEach((website) => {
+    const regex = new RegExp(`${website}`, 'gi')
+    const regex2 = new RegExp(
+      /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/,
+      'gi'
+    )
+
+    // if (regex.test(URL)) {
+
+    // var result = /Hello/g.test(str)
+  })
+
   if (excludedWebsites.includes(document.URL)) {
     console.log(document.URL)
-    console.log('jsem na GOOGLU či 49 či nat.cz')
+    console.log('jsem na EXCLUDED WEBSITES')
     document.documentElement.style.setProperty('--picked-color', 'revert')
     // chrome.storage.sync.set({ link_color: 'red' })
     // if (colorChanged !== 'red') {
@@ -20,14 +42,26 @@ const App: React.FC<{}> = () => {
     // }
   } else {
     console.log('povolená website', document.URL)
-    document.documentElement.style.setProperty('--picked-color', 'yellow')
+    chrome.storage.sync.get(['link_color'], (result) => {
+      console.log(result.link_color)
+      document.documentElement.style.setProperty(
+        '--picked-color',
+        result.link_color
+      )
+    })
+    // document.documentElement.style.setProperty('--picked-color', 'yellow')
   }
 
   // chrome.runtime.sendMessage(null, 'ahoj', null, (response) => {
   //   console.log(response)
   // })
-
-  // const [colorChanged, setColorChanged] = useState('blue')
+  // if (true) {
+  //   document.documentElement.style.setProperty(
+  //     '--picked-color',
+  //     'rgba(233,0,253,0.5)'
+  //   )
+  // }
+  const [colorChanged, setColorChanged] = useState('blue')
 
   // chrome.storage.sync.get(['link_color'], (result) => {
   //   document.documentElement.style.setProperty(
@@ -38,51 +72,17 @@ const App: React.FC<{}> = () => {
 
   // console.log('CONTENTT SCRIPT!!')
 
-  // chrome.runtime.onMessage.addListener(function (
-  //   request,
-  //   sender,
-  //   sendResponse
-  // ) {
-  //   console.log(request)
-  //   if (request.colorChanged === true) {
-  //     chrome.storage.sync.set({ link_color: request.color })
-  //     setColorChanged('changedColor')
-  //   }
-
-  //   // if (request.googlePage === true) {
-  //   //   console.log('dostal jsem google page mess')
-  //   //   sendResponse('hokusák')
-  //   // }
-  // })
-
-  // chrome.runtime.onMessage.addListener(function (
-  //   request,
-  //   sender,
-  //   sendResponse
-  // ) {
-  //   console.log(
-  //     sender.tab
-  //       ? 'from a content script:' + sender.tab.url
-  //       : 'from the extension'
-  //   )
-  //   if (request.pokus === 'hokus') sendResponse({ pokusRes: 'hokusak' })
-  // })
-
-  // EXCLUDE WEBSITES:
-  // let rules: {
-  //   [url: string]: () => void
-  // } = {
-  //   'https://www.neelnanda.io/blog/49-mentoring': filterNYTTechnology2,
-  // }
-
-  // // BLOCING USING STYLING
-  // function filterNYTTechnology2() {
-  //   console.log('jsem na neelnanda')
-  //   document.documentElement.style.setProperty('--picked-color', 'initial')
-  // }
-
-  //   rules[document.URL]()
-  // }
+  chrome.runtime.onMessage.addListener(function (
+    request,
+    sender,
+    sendResponse
+  ) {
+    console.log(request)
+    if (request.colorChanged === true) {
+      setStoredOptions({ link_color: request.color })
+      setColorChanged(request.color)
+    }
+  })
 
   return <div className="overlayCard"></div>
 }

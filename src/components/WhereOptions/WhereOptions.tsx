@@ -7,31 +7,35 @@ import {
   RadioGroup,
   Radio,
 } from '@mui/material'
-import TextArea from '../TextArea'
-import Button from '../Button'
-import { getStoredOptions } from '../../utils/storage'
+import TextArea from './TextArea'
+import Button from './Button'
+import { getStoredOptions, setStoredOptions } from '../../utils/storage'
 
 interface AppProps {
   whereOption: string
   setWhereOption: any
+  setExceptSites: any
+  exceptSites: string[]
+  onlySites: string[]
+  setOnlySites: any
 }
 
-const WhereOptions: React.FC<AppProps> = ({ whereOption, setWhereOption }) => {
-  // useEffect(() => {
-  //   getStoredOptions().then((data) => {
-  //     setButtonSelected(data.where_options)
-  //   })
-  // }, [])
-
+const WhereOptions: React.FC<AppProps> = ({
+  whereOption,
+  setWhereOption,
+  exceptSites,
+  setExceptSites,
+  onlySites,
+  setOnlySites,
+}) => {
   const handleChange = (event) => {
     setWhereOption(event.target.value)
-    chrome.storage.sync.set({ where_options: event.target.value })
+    setStoredOptions({ where_options: event.target.value })
   }
 
   return (
     <FormControl>
-      <div>{whereOption}</div>
-      <input type="radio" checked={whereOption === 'except'} />
+      <div>Running condition: {whereOption}</div>
       <FormLabel id="demo-radio-buttons-group-label"></FormLabel>
       <RadioGroup
         aria-labelledby="demo-radio-buttons-group-label"
@@ -52,8 +56,13 @@ const WhereOptions: React.FC<AppProps> = ({ whereOption, setWhereOption }) => {
           onChange={handleChange}
           checked={whereOption === 'except'}
         />
-        <TextArea></TextArea>
-        <Button textAreaContent={''}></Button>
+        {whereOption === 'except' ? (
+          <TextArea
+            exceptSites={exceptSites}
+            setExceptSites={setExceptSites}
+          ></TextArea>
+        ) : null}
+        {/* <Button textAreaContent={''}></Button> */}
         <FormControlLabel
           value="only"
           control={<Radio />}
@@ -61,6 +70,12 @@ const WhereOptions: React.FC<AppProps> = ({ whereOption, setWhereOption }) => {
           onChange={handleChange}
           checked={whereOption === 'only'}
         />
+        {whereOption === 'only' ? (
+          <TextArea
+            onlySites={onlySites}
+            setOnlySites={setOnlySites}
+          ></TextArea>
+        ) : null}
         <FormControlLabel
           value="none"
           control={<Radio />}
