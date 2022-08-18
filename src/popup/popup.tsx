@@ -49,4 +49,8 @@ const App: React.FC<{}> = () => {
 const container = document.createElement('div')
 document.body.appendChild(container)
 const root = createRoot(container)
+// const rootElement = document.getElementById('root')
+
+// const root = createRoot(rootElement!);
+
 root.render(<App />)

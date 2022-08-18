@@ -1,5 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import * as React from 'react'
+import { useEffect, useState } from 'react'
 import ReactDOM from 'react-dom'
+import { createRoot } from 'react-dom/client'
 
 import './contentScript.css'
 import { setStoredOptions, getStoredOptions } from '../utils/storage'
@@ -20,7 +22,8 @@ const App: React.FC<{}> = () => {
       if (matches.length > 0) {
         document.documentElement.style.setProperty(
           '--picked-color',
-          'rgba(255,0,0,0.5)'
+          // 'rgba(255,0,0,0.5)'
+          'revert'
         )
       } else {
         document.documentElement.style.setProperty(
@@ -69,6 +72,38 @@ const App: React.FC<{}> = () => {
       //   }
       // })
     }
+    if (data.where_options === 'only') {
+      const onlyWebsites: Array<string> = [...data.only_sites]
+
+      const myURLx = document.URL
+
+      var matches = onlyWebsites.filter(function (website) {
+        return new RegExp(website).test(myURLx)
+      })
+      if (matches.length < 1) {
+        document.documentElement.style.setProperty(
+          '--picked-color',
+          'revert'
+          // 'rgba(161,0,175,1)' // růžo
+        )
+      } else {
+        document.documentElement.style.setProperty(
+          '--picked-color',
+          data.link_color
+          // 'rgba(41,140,0,1)' //zele
+        )
+      }
+    }
+    if (data.where_options === 'all') {
+      document.documentElement.style.setProperty(
+        '--picked-color',
+        data.link_color
+      )
+    }
+
+    // if (data.where_options === 'pause') {
+    //   return false
+    // }
   })
 
   // chrome.runtime.sendMessage(null, 'ahoj', null, (response) => {
@@ -106,6 +141,7 @@ const App: React.FC<{}> = () => {
   return <div className="overlayCard"></div>
 }
 
-const root = document.createElement('div')
-document.body.appendChild(root)
-ReactDOM.render(<App />, root)
+const container = document.createElement('div')
+document.body.appendChild(container)
+const root = createRoot(container)
+root.render(<App />)

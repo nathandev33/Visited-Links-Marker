@@ -2,15 +2,16 @@
 import { setStoredOptions } from '../utils/storage'
 chrome.runtime.onInstalled.addListener(() => {
   setStoredOptions({
-    where_options: 'except',
-    link_color: 'rgba(255,179,0,1)',
+    where_options: 'all',
+    link_color: 'rgba(199,139,0,0)',
     link_background: 'revert',
     except_sites: [
       'https://stackoverflow.com',
       'https://natanael-adamec.cz/',
       'https://www.neelnanda.io',
+      'https://www.hovnooo.com',
     ],
-    only_sites: ['only', 'sites', 'test'],
+    only_sites: ['https://www.reddit.com/', 'https://www.youtube.com'],
   })
 })
 

@@ -58,8 +58,14 @@ const WhereOptions: React.FC<AppProps> = ({
         />
         {whereOption === 'except' ? (
           <TextArea
-            exceptSites={exceptSites}
-            setExceptSites={setExceptSites}
+            sitesState={exceptSites}
+            setSitesState={setExceptSites}
+            storageKey={'except_sites'}
+            placeholder={[
+              'https://www.facebook.com/',
+              'https://mail.google.com/',
+              'https://*.google.com/',
+            ]}
           ></TextArea>
         ) : null}
         {/* <Button textAreaContent={''}></Button> */}
@@ -72,8 +78,10 @@ const WhereOptions: React.FC<AppProps> = ({
         />
         {whereOption === 'only' ? (
           <TextArea
-            onlySites={onlySites}
-            setOnlySites={setOnlySites}
+            sitesState={onlySites}
+            setSitesState={setOnlySites}
+            storageKey={'only_sites'}
+            placeholder={['https://www.reddit.com/', 'https://www.youtube.com']}
           ></TextArea>
         ) : null}
         <FormControlLabel

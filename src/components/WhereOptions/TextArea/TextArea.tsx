@@ -1,57 +1,59 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { TextareaAutosize } from '@mui/material'
+import { TextareaAutosize, Button } from '@mui/material'
 import './TextArea.css'
-import Button from '../Button'
+// import Button from '../Button'
 import { setStoredOptions, getStoredOptions } from '../../../utils/storage'
 import './TextArea.css'
 
 interface AppProps {
-  exceptSites?: string[]
-  setExceptSites?: any
-  onlySites?: string[]
-  setOnlySites?: any
+  sitesState?: string[]
+  setSitesState?: any
+  storageKey: string
+  placeholder: string[]
 }
 
 // chci ted udělat, že při kliknutí na save se napsaná nová města uloží do chrome.storage.
 // nemůžu change props.
 
 const TextArea: React.FC<AppProps> = ({
-  exceptSites,
-  setExceptSites,
-  onlySites,
-  setOnlySites,
+  sitesState,
+  setSitesState,
+  storageKey,
+  placeholder,
 }) => {
   const textAreaContent = useRef(null)
   const tlacitko = useRef(null)
+  const [test, setTest] = useState('nic')
   const updateSitesState = () => {
-    setExceptSites([textAreaContent.current.value])
+    // setSitesState([textAreaContent.current.value])
+    setSitesState(textAreaContent.current.value.split('\n'))
   }
 
   // const [newSites, setNewSites] = useState<boolean>(true)
+  let newExceptSites
   const saveSites = () => {
     tlacitko.current.style.backgroundColor = 'red'
-    const newExceptSites = textAreaContent.current.value.split('\r\n')
+    newExceptSites = textAreaContent.current.value.split('\n')
+    setTest(newExceptSites)
     setStoredOptions({
-      except_sites: newExceptSites,
+      // [storageKey]: newExceptSites,
+      [storageKey]: newExceptSites,
     })
 
     // setNewSites(!newSites)
   }
   return (
     <div>
-      {/* <div>{exceptSites}</div> */}
-      {/* <div>{newSites}</div> */}
+      {/* <div>{!newExceptSites ? "loading" : newExceptSites}</div> */}
+      <div>{test}</div>
 
-      <div>{Array.isArray(exceptSites) ? 'je array' : 'is not array'}</div>
       <TextareaAutosize
         className={'TextArea'}
         maxRows={12}
         minRows={8}
         aria-label="maximum height"
-        placeholder="https://www.facebook.com/
-      https://mail.google.com/
-      https://*.google.com/"
-        value={!exceptSites ? 'loading...' : exceptSites.join('\r\n')}
+        placeholder={!placeholder ? 'loading...' : placeholder.join('\n')}
+        value={!sitesState ? 'loading...' : sitesState.join('\n')}
         ref={textAreaContent}
         style={{ width: 300 }}
         onChange={updateSitesState}
@@ -60,6 +62,9 @@ const TextArea: React.FC<AppProps> = ({
       <button className="button-18" ref={tlacitko} onClick={saveSites}>
         save
       </button>
+      {/* <div ref={tlacitko} onClick={saveSites}>
+        <Button>Save </Button>
+      </div> */}
     </div>
   )
 }
