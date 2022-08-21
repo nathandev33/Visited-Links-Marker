@@ -8,8 +8,14 @@ import {
   Radio,
 } from '@mui/material'
 import TextArea from './TextArea'
-import Button from './Button'
 import { getStoredOptions, setStoredOptions } from '../../utils/storage'
+import { Typography } from '@mui/material/'
+import SettingsIcon from '@mui/icons-material/Settings'
+import MouseHoverSpan from './MouseHoverSpan'
+// import '@fontsource/roboto/300.css'
+// import '@fontsource/roboto/400.css'
+// import '@fontsource/roboto/500.css'
+// import '@fontsource/roboto/700.css'
 
 interface AppProps {
   whereOption: string
@@ -34,8 +40,10 @@ const WhereOptions: React.FC<AppProps> = ({
   }
 
   return (
-    <FormControl>
-      <div>Running condition: {whereOption}</div>
+    <FormControl sx={{ mt: '8px', ml: '15px' }}>
+      {/* <Typography variant="h5" component="h2">
+        Running conditions <SettingsIcon sx={{ verticalAlign: 'middle' }} />
+      </Typography> */}
       <FormLabel id="demo-radio-buttons-group-label"></FormLabel>
       <RadioGroup
         aria-labelledby="demo-radio-buttons-group-label"
@@ -45,14 +53,14 @@ const WhereOptions: React.FC<AppProps> = ({
         <FormControlLabel
           value="all"
           control={<Radio />}
-          label="Run the extension on all websites."
+          label="✅ Run on ALL websites."
           onChange={handleChange}
           checked={whereOption === 'all'}
         />
         <FormControlLabel
           value="except"
           control={<Radio />}
-          label="Run the extension on all pages except:"
+          label="❌ Run on all websites EXCEPT:"
           onChange={handleChange}
           checked={whereOption === 'except'}
         />
@@ -72,7 +80,13 @@ const WhereOptions: React.FC<AppProps> = ({
         <FormControlLabel
           value="only"
           control={<Radio />}
-          label="Run the extension only on these websites:"
+          // label="📝 Run ONLY on these websites:"
+          label={
+            <span>
+              📝 Run ONLY on these websites:{' '}
+              <MouseHoverSpan text={' (?)'}></MouseHoverSpan>
+            </span>
+          }
           onChange={handleChange}
           checked={whereOption === 'only'}
         />
@@ -87,7 +101,7 @@ const WhereOptions: React.FC<AppProps> = ({
         <FormControlLabel
           value="none"
           control={<Radio />}
-          label="Pause extension from running."
+          label="✋ PAUSE from running."
           onChange={handleChange}
           checked={whereOption === 'none'}
         />

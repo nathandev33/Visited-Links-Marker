@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { TextareaAutosize, Button } from '@mui/material'
+import { TextareaAutosize, Button, Grid } from '@mui/material'
 import './TextArea.css'
 // import Button from '../Button'
 import { setStoredOptions, getStoredOptions } from '../../../utils/storage'
@@ -44,24 +44,42 @@ const TextArea: React.FC<AppProps> = ({
   }
   return (
     <div>
-      {/* <div>{!newExceptSites ? "loading" : newExceptSites}</div> */}
-      <div>{test}</div>
-
-      <TextareaAutosize
-        className={'TextArea'}
-        maxRows={12}
-        minRows={8}
-        aria-label="maximum height"
-        placeholder={!placeholder ? 'loading...' : placeholder.join('\n')}
-        value={!sitesState ? 'loading...' : sitesState.join('\n')}
-        ref={textAreaContent}
-        style={{ width: 300 }}
-        onChange={updateSitesState}
-      />
-      {/* <Button ref={tlacitko} onClickEvent={saveSites} /> */}
-      <button className="button-18" ref={tlacitko} onClick={saveSites}>
+      <Grid
+        container
+        direction="column"
+        justifyContent="center"
+        alignItems="center"
+      >
+        <Grid item>
+          <TextareaAutosize
+            maxRows={12}
+            minRows={8}
+            aria-label="maximum height"
+            placeholder={!placeholder ? 'loading...' : placeholder.join('\n')}
+            value={!sitesState ? 'loading...' : sitesState.join('\n')}
+            ref={textAreaContent}
+            style={{
+              width: 300,
+              backgroundColor: '#fcfcfb',
+              borderRadius: '3px',
+              padding: '8px',
+              fontFamily: "'Trebuchet MS', sans-serif",
+              marginLeft: '29px',
+            }}
+            onChange={updateSitesState}
+          />
+        </Grid>
+        {/* <Button ref={tlacitko} onClickEvent={saveSites} /> */}
+        {/* <button className="button-18" ref={tlacitko} onClick={saveSites}>
         save
-      </button>
+      </button> */}
+        <Grid item>
+          <Button variant="contained" ref={tlacitko} onClick={saveSites}>
+            save
+          </Button>
+        </Grid>
+      </Grid>
+
       {/* <div ref={tlacitko} onClick={saveSites}>
         <Button>Save </Button>
       </div> */}

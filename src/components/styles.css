@@ -1,6 +1,5 @@
 body {
   margin: 0;
-  padding: 50px;
   font: normal 18px/1.4 Arial, sans-serif;
 }
 
@@ -19,3 +18,16 @@ body {
   font: inherit;
   cursor: pointer;
 }
+
+.ColorPicker {
+  width: 100px;
+  padding: 0;
+  margin: 0;
+  margin-top: 14px;
+  margin-left: 10px;
+  margin-bottom: 10px;
+}
+
+/* .TextFieldNumber {
+  width: 70px;
+} */

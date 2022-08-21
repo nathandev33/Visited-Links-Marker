@@ -47,7 +47,7 @@ interface AppProps {
   ref: any
 }
 
-const Button: React.FC<AppProps> = ({ onClickEvent }) => {
+const Button2: React.FC<AppProps> = ({ onClickEvent }) => {
   // const savePreferences = () => {
   //   const arr = textAreaContent.split('\n')
   //   setStoredOptions({ except_sites: arr })
@@ -67,4 +67,4 @@ const Button: React.FC<AppProps> = ({ onClickEvent }) => {
   )
 }
 
-export default Button
+export default Button2
