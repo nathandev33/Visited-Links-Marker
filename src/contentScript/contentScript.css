@@ -1,5 +1,5 @@
 :root {
-  --picked-color: initial;
+  --picked-color: unset;
 }
 
 A:visited,

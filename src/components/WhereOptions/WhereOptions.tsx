@@ -1,5 +1,4 @@
 import * as React from 'react'
-import { useState, useEffect } from 'react'
 import {
   FormLabel,
   FormControl,
@@ -8,14 +7,8 @@ import {
   Radio,
 } from '@mui/material'
 import TextArea from './TextArea'
-import { getStoredOptions, setStoredOptions } from '../../utils/storage'
-import { Typography } from '@mui/material/'
-import SettingsIcon from '@mui/icons-material/Settings'
+import { setStoredOptions } from '../../utils/storage'
 import MouseHoverSpan from './MouseHoverSpan'
-// import '@fontsource/roboto/300.css'
-// import '@fontsource/roboto/400.css'
-// import '@fontsource/roboto/500.css'
-// import '@fontsource/roboto/700.css'
 
 interface AppProps {
   whereOption: string
@@ -41,9 +34,6 @@ const WhereOptions: React.FC<AppProps> = ({
 
   return (
     <FormControl sx={{ mt: '8px', ml: '15px' }}>
-      {/* <Typography variant="h5" component="h2">
-        Running conditions <SettingsIcon sx={{ verticalAlign: 'middle' }} />
-      </Typography> */}
       <FormLabel id="demo-radio-buttons-group-label"></FormLabel>
       <RadioGroup
         aria-labelledby="demo-radio-buttons-group-label"
@@ -60,7 +50,12 @@ const WhereOptions: React.FC<AppProps> = ({
         <FormControlLabel
           value="except"
           control={<Radio />}
-          label="❌ Run on all websites EXCEPT:"
+          label={
+            <span>
+              ❌ Run on all websites EXCEPT:{' '}
+              <MouseHoverSpan text={' (?)'}></MouseHoverSpan>
+            </span>
+          }
           onChange={handleChange}
           checked={whereOption === 'except'}
         />
@@ -71,16 +66,14 @@ const WhereOptions: React.FC<AppProps> = ({
             storageKey={'except_sites'}
             placeholder={[
               'https://www.facebook.com/',
+              'reddit',
               'https://mail.google.com/',
-              'https://*.google.com/',
             ]}
           ></TextArea>
         ) : null}
-        {/* <Button textAreaContent={''}></Button> */}
         <FormControlLabel
           value="only"
           control={<Radio />}
-          // label="📝 Run ONLY on these websites:"
           label={
             <span>
               📝 Run ONLY on these websites:{' '}
@@ -95,16 +88,20 @@ const WhereOptions: React.FC<AppProps> = ({
             sitesState={onlySites}
             setSitesState={setOnlySites}
             storageKey={'only_sites'}
-            placeholder={['https://www.reddit.com/', 'https://www.youtube.com']}
+            placeholder={[
+              'https://www.reddit.com/',
+              'google',
+              'https://www.youtube.com',
+            ]}
           ></TextArea>
         ) : null}
-        <FormControlLabel
+        {/* <FormControlLabel
           value="none"
           control={<Radio />}
           label="✋ PAUSE from running."
           onChange={handleChange}
           checked={whereOption === 'none'}
-        />
+        /> */}
       </RadioGroup>
     </FormControl>
   )

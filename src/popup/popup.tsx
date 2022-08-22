@@ -1,30 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import { createRoot } from 'react-dom/client'
 import './popup.css'
-import ColorPicker from '../components/colorPicker'
+import ColorPicker from '../components/ColorPicker'
 import WhereOptions from '../components/WhereOptions'
 import { getStoredOptions } from '../utils/storage'
-import TextArea from '../components/WhereOptions/TextArea'
 import '@fontsource/roboto/300.css'
 import '@fontsource/roboto/400.css'
 import '@fontsource/roboto/500.css'
 import '@fontsource/roboto/700.css'
 import { ThemeProvider } from '@mui/material/styles'
-import { theme } from '../components/theme'
-import { Button, styled } from '@mui/material/'
-import {
-  Typography,
-  Grid,
-  AppBar,
-  Card,
-  CardActions,
-  Stack,
-  CardContent,
-  CardMedia,
-  CssBaseline,
-  Container,
-  Toolbar,
-} from '@mui/material'
+import { Typography, Grid, AppBar, CssBaseline } from '@mui/material'
 import ColorLensIcon from '@mui/icons-material/ColorLens'
 import SettingsIcon from '@mui/icons-material/Settings'
 
@@ -65,7 +50,6 @@ const App: React.FC<{}> = () => {
         </Grid>
       </AppBar>
       <ColorPicker
-        // link_color={'rgba(193,22,22,0.5)'}
         linkColor={linkColor}
         changeColor={changeColor}
       ></ColorPicker>
@@ -95,12 +79,5 @@ const App: React.FC<{}> = () => {
 const container = document.createElement('div')
 document.body.appendChild(container)
 const root = createRoot(container)
-// const rootElement = document.getElementById('root')
 
-// const root = createRoot(rootElement!);
-
-root.render(
-  <ThemeProvider theme={theme}>
-    <App />
-  </ThemeProvider>
-)
+root.render(<App />)

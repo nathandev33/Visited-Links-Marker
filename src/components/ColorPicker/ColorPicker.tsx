@@ -1,15 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { RgbaColorPicker } from 'react-colorful'
 import './styles.css'
-import { getStoredOptions } from '../utils/storage'
-import {
-  TextField,
-  Box,
-  styled,
-  Button,
-  Grid,
-  Typography,
-} from '@mui/material/'
+import { getStoredOptions } from '../../utils/storage'
+import { TextField, Box, Button, Grid } from '@mui/material/'
 
 interface AppProps {
   changeColor: (color: string) => void
