@@ -1,4 +1,4 @@
-# Visited Links Marker
+# [Visited Links Marker](https://chrome.google.com/webstore/detail/visited-links-marker/nnkhkkkcmkcncmpigbhnlnblcmafjchm)
 
 ## Description
 
@@ -19,6 +19,8 @@
 - If you'd like to contribute to this repository, feel free, just fork the project and make a pull request.
 
 ## Getting Started
+
+- You can download the extension in a [chrome store](https://chrome.google.com/webstore/detail/visited-links-marker/nnkhkkkcmkcncmpigbhnlnblcmafjchm)
 
 1. `npm i` to install dependancies
 2. `npm start` to start running the fast development mode Webpack build process that bundle files into the `dist` folder
